@@ -1,4 +1,4 @@
-module github.com/veleton777/hw01_hello_otus
+module github.com/veleton777/home_work/hw01_hello_otus
 
 go 1.16
 
