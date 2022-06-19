@@ -22,12 +22,6 @@ func TestUnpack(t *testing.T) {
 		{input: "sdt79aq", expected: "", wantErr: true},
 		{input: `d\n5abc`, expected: "d\n\n\n\n\nabc", wantErr: false},
 		{input: `a\ngs`, expected: "a\ngs", wantErr: false},
-
-		// uncomment if task with asterisk completed
-		//{input: `qwe\4\5`, expected: `qwe45`},
-		//{input: `qwe\45`, expected: `qwe44444`},
-		//{input: `qwe\\5`, expected: `qwe\\\\\`},
-		//{input: `qwe\\\3`, expected: `qwe\3`},
 	}
 
 	for _, tc := range tests {

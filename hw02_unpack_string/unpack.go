@@ -20,17 +20,15 @@ func Unpack(str string) (string, error) {
 			isSlash = true
 			continue
 		}
+		if k == 0 && unicode.IsDigit(s) {
+			return "", ErrInvalidString
+		}
 		if k == length-1 && !unicode.IsDigit(s) {
 			b.WriteRune(s)
 			continue
 		}
-		if k == 0 {
-			if unicode.IsDigit(s) {
-				return "", ErrInvalidString
-			}
-		}
 		if !unicode.IsDigit(s) {
-			if k != length-1 && unicode.IsDigit(rune(str[k+1])) {
+			if unicode.IsDigit(rune(str[k+1])) {
 				continue
 			}
 			if isSlash && string(s) == "n" {
@@ -44,22 +42,17 @@ func Unpack(str string) (string, error) {
 		if unicode.IsDigit(rune(str[k-1])) {
 			return "", ErrInvalidString
 		}
-		n, err := strconv.Atoi(string(s))
-		if err != nil {
-			return "", err
-		}
+		n, _ := strconv.Atoi(string(s))
 		if n == 0 {
 			isSlash = false
 			continue
 		}
-		tmpStr := ""
 		if string(rune(str[k-1])) == "n" && isSlash {
-			tmpStr = "\n"
 			isSlash = false
-		} else {
-			tmpStr = string(rune(str[k-1]))
+			b.WriteString(strings.Repeat("\n", n))
+			continue
 		}
-		b.WriteString(strings.Repeat(tmpStr, n))
+		b.WriteString(strings.Repeat(string(rune(str[k-1])), n))
 	}
 	return b.String(), nil
 }
