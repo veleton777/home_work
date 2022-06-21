@@ -9,7 +9,6 @@ func Top10(str string) []string {
 	words := strings.Fields(str)
 
 	wordCounter := make(map[string]int)
-
 	for _, w := range words {
 		wordCounter[w]++
 	}
@@ -31,22 +30,17 @@ func Top10(str string) []string {
 
 	maxSize := wordCounter[topKeys[0]]
 	maxCountWord := 0
-
 	for _, v := range topKeys {
 		if wordCounter[v] == maxSize {
 			maxCountWord++
 		}
 		if maxCountWord == 10 {
+			sort.Strings(topKeys)
 			break
 		}
 	}
 
-	if maxCountWord == 10 {
-		sort.Strings(topKeys)
-	}
-
 	topWords := make([]string, 0, 10)
-
 	for k, v := range topKeys {
 		if k == 10 {
 			break
