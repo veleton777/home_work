@@ -42,7 +42,10 @@ func Unpack(str string) (string, error) {
 		if unicode.IsDigit(rune(str[k-1])) {
 			return "", ErrInvalidString
 		}
-		n, _ := strconv.Atoi(string(s))
+		n, err := strconv.Atoi(string(s))
+		if err != nil {
+			return "", ErrInvalidString
+		}
 		if n == 0 {
 			isSlash = false
 			continue
