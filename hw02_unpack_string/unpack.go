@@ -23,11 +23,11 @@ func Unpack(str string) (string, error) {
 		if k == 0 && unicode.IsDigit(s) {
 			return "", ErrInvalidString
 		}
-		if k == length-1 && !unicode.IsDigit(s) {
-			b.WriteRune(s)
-			continue
-		}
 		if !unicode.IsDigit(s) {
+			if k == length-1 {
+				b.WriteRune(s)
+				continue
+			}
 			if unicode.IsDigit(rune(str[k+1])) {
 				continue
 			}
